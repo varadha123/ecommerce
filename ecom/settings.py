@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g=d99=*8x2$x6rkg57(x7l-ayu0&(n!y%6*=h^1xmv345prf2-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,7 +76,7 @@ WSGI_APPLICATION = 'ecom.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -89,6 +90,11 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+}
+'''
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.parse('postgresql://ecomdb_ni02_user:irvByS8CBHiUXFqRezLXhV30ZS9kcMub@dpg-crmk76g8fa8c73ak2h1g-a.oregon-postgres.render.com/ecomdb_ni02')
 }
 
 
@@ -130,6 +136,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR / 'customer/static')
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
